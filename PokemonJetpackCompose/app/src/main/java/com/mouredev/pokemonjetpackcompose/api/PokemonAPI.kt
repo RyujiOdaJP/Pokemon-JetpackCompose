@@ -2,6 +2,8 @@ package com.mouredev.pokemonjetpackcompose.api
 
 import com.mouredev.pokemonjetpackcompose.model.Pokemon
 import com.mouredev.pokemonjetpackcompose.model.PokemonList
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +26,15 @@ object PokemonAPI {
 
     fun loadPokemon(success: (pokemonList: List<Pokemon>) -> Unit, failure: () -> Unit) {
 
-        val retrofit = Retrofit.Builder().baseUrl("https://pokeapi.co/api/v2/")
+        val logging = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY // Log request and response body
+        }
+        val client = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://pokeapi.co/api/v2/")
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(PokemonAPI::class.java)
 

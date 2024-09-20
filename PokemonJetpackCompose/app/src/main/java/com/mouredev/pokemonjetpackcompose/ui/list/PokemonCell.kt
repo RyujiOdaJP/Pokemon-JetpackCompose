@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.mouredev.pokemonjetpackcompose.model.Pokemon
@@ -49,5 +50,15 @@ fun PokemonCell(pokemon: Pokemon) {
         )
         Spacer(modifier = Modifier.fillMaxWidth())
     }
+}
 
+@Preview(showBackground = true)
+@Composable
+fun PokemonCellPreview() {
+    PokemonCell(
+        pokemon = Pokemon(
+            name = "bulbasaur",
+            url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+        )
+    )
 }
